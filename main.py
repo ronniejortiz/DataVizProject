@@ -52,18 +52,4 @@ def plot_dashboard():
   
   plt.show()
 
-
-def plot_single_cookie(cookie):
-  x = dataset_t["Dates"]
-  y = dataset_t[cookie]
-  plt.plot(x, y, linewidth=2)
-  plt.ylabel('Sales')
-  plt.title(cookie)
-  plt.ylim(bottom=0, top=50)
-
-  ax = plt.gca()
-  ax.xaxis.set_visible(False)
-  
-  plt.show()
-
 plot_dashboard()
