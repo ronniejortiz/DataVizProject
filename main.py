@@ -17,22 +17,53 @@ dataset_t = dataset_t[1:]
 cookies = dataset_t.columns.values[1:]
 num_cookies = len(cookies)
 
-# Create line chart
-i = 0
-color = ['green', 'purple', 'brown', 'tan', 'yellow', 'blue', 'brown']
-while i < num_cookies: 
+#Calculate the total sales for each cookie
+total_sales = dataset_t[cookies].sum()
+
+# Create dashboard
+def plot_dashboard():
+  # Create line charts
+  i = 0
+  color = ['green', 'purple', 'brown', 'tan', 'yellow', 'blue', 'brown']
+  while i < num_cookies: 
+    x = dataset_t["Dates"]
+    y = dataset_t[cookies[i]]
+    plt.subplot(4, 2, i+1)
+    plt.plot(x, y, linewidth=2, color=color[i])
+    plt.ylabel('Sales')
+    plt.title(cookies[i])
+    plt.ylim(bottom=0, top=50)
+    ax = plt.gca()
+    ax.xaxis.set_visible(False)
+    i += 1
+  
+  plt.subplots_adjust(hspace=0.5)
+  plt.suptitle('Girl Scout Cookie Sales Dashboard', fontsize=24)
+  
+  
+  # Create a bar chart for total sales
+  x = range(len(cookies))
+  plt.subplot(4, 2, 8)
+  plt.bar(x, total_sales, color=color)
+  plt.xticks([])
+  plt.title('Total Cookie Sales')
+  plt.xlabel('Cookie Type')
+  plt.ylabel('Total Sales')
+  
+  plt.show()
+
+
+def plot_single_cookie(cookie):
   x = dataset_t["Dates"]
-  y = dataset_t[cookies[i]]
-  plt.subplot(4, 2, i+1)
-  plt.plot(x, y, linewidth=3, color=color[i])
+  y = dataset_t[cookie]
+  plt.plot(x, y, linewidth=2)
   plt.ylabel('Sales')
-  plt.title(cookies[i])
+  plt.title(cookie)
   plt.ylim(bottom=0, top=50)
+
   ax = plt.gca()
   ax.xaxis.set_visible(False)
-  i += 1
+  
+  plt.show()
 
-plt.subplots_adjust(hspace=0.5)
-plt.suptitle('Girl Scout Cookie Sales Dashboard', fontsize=24)
-
-plt.show()
+plot_dashboard()
